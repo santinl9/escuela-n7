@@ -1,0 +1,42 @@
+[
+  {
+    "id": "r1",
+    "nombre": "Administrador",
+    "permisos": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20"]
+  },
+  {
+    "id": "r2",
+    "nombre": "Directivo",
+    "permisos": ["p1", "p2", "p10", "p11"]
+  },
+  {
+    "id": "r3",
+    "nombre": "Preceptor",
+    "permisos": ["p1", "p2"]
+  },
+  {
+    "id": "r4",
+    "nombre": "Docente",
+    "permisos": ["p4", "p5"]
+  },
+  {
+    "id": "r5",
+    "nombre": "Vicedirectivo",
+    "permisos": ["p1", "p2", "p10"]
+  },
+  {
+    "id": "r6",
+    "nombre": "Secretario",
+    "permisos": ["p1", "p13", "p14"]
+  },
+  {
+    "id": "r7",
+    "nombre": "Prosecretario",
+    "permisos": ["p1", "p13"]
+  },
+  {
+    "id": "r8",
+    "nombre": "EMATP",
+    "permisos": ["p1", "p4"]
+  }
+]

@@ -1,0 +1,14 @@
+[
+  { "id": 1,  "nombre": "Matemática",             "nivel": 1, "activo": true, "curricular": true },
+  { "id": 2,  "nombre": "Lengua y Literatura",     "nivel": 1, "activo": true, "curricular": true },
+  { "id": 3,  "nombre": "Biología",                "nivel": 1, "activo": true, "curricular": true },
+  { "id": 4,  "nombre": "Historia",                "nivel": 2, "activo": true, "curricular": true },
+  { "id": 5,  "nombre": "Geografía",               "nivel": 2, "activo": true, "curricular": true },
+  { "id": 6,  "nombre": "Física",                  "nivel": 2, "activo": true, "curricular": true },
+  { "id": 7,  "nombre": "Química",                 "nivel": 3, "activo": true, "curricular": true },
+  { "id": 8,  "nombre": "Educación Ciudadana",     "nivel": 3, "activo": true, "curricular": true },
+  { "id": 9,  "nombre": "Inglés",                  "nivel": 3, "activo": true, "curricular": false },
+  { "id": 10, "nombre": "Economía",                "nivel": 4, "activo": true, "curricular": true },
+  { "id": 11, "nombre": "Filosofía",               "nivel": 5, "activo": true, "curricular": true },
+  { "id": 12, "nombre": "Psicología",              "nivel": 6, "activo": true, "curricular": true }
+]

@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+@theme {
+
+  /* --- ESPACIADOS PERSONALIZADOS ---*/
+  --spacing-xs: 0.25rem;        /* 4px */
+  --spacing-sm: 0.5rem;         /* 8px */
+  --spacing-md: 1rem;           /* 16px */
+  --spacing-lg: 1.5rem;         /* 24px */
+  --spacing-xl: 3rem;           /* 48px */
+  --spacing-margin-mobile: 1rem;/* 16px */
+  --spacing-margin-desktop: 4rem;/* 64px */
+
+  /* --- FUENTES PERSONALIZADAS ---*/
+  --font-headline: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+
+  /* --- TAMAÑOS DE FUENTE PERSONALIZADAS ---*/
+  --text-body-sm: 0.875rem;              /* 14px */
+  --text-body-sm--line-height: 1.25rem;  /* 20px */
+  --text-label-md: 0.875rem;             /* 14px */
+  --text-label-md--font-weight: 600;
+  --text-headline-sm: 1.125rem;          /* 18px */
+  --text-headline-sm--line-height: 1.5rem;
+  --text-headline-md: 1.5rem;            /* 24px */
+  --text-headline-md--font-weight: 600;
+
+  /* --- COLORES DINÁMICOS ---*/
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-variant: var(--surface-variant);
+  --color-outline-variant: var(--outline-variant);
+  --color-background: var(--background);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-primary: var(--primary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-success-container: var(--success-container);
+  --color-login-hero: var(--login-hero);
+  --color-on-login-hero: var(--on-login-hero);
+}
+
+/*--- DEFINICION DE COLORES PARA MODO CLARO Y OSCURO*/
+@layer base {
+  :root {
+    --surface-container: #ffe9e6;
+    --surface-container-high: #ffe2dd;
+    --surface-variant: #fcdbd6;
+    --outline-variant: #e6bdb7;
+    --background: #fff8f6;
+    --on-surface: #281714;
+    --on-surface-variant: #5d3f3b;
+    --primary: #980003;
+    --secondary-container: #ff7766;
+    --on-secondary-container: #710e09;
+    --error: #ba1a1a;
+    --error-container: #ffdad6;
+    /* Verde pensado a la misma altura tonal que error-container: mismo criterio de
+       "superficie pastel muy sutil", solo que en la punta opuesta (positivo/presente). */
+    --success-container: #d3f2d8;
+    --on-background: #281714;
+    /* Panel institucional del login: en claro coincide con primary/background */
+    --login-hero: var(--primary);
+    --on-login-hero: var(--background);
+  }
+
+  .dark {
+    --surface-container: #211514;
+    --surface-container-high: #2b1c1b;
+    --surface-variant: #534341;
+    --outline-variant: #534341;
+    --background: #1a1110;
+    --on-surface: #ffedea;
+    --on-surface-variant: #d8c2be;
+    --primary: #ffb4a9;
+    --secondary-container: #a8372b;
+    --on-secondary-container: #ffdad5;
+    --error: #ffb4ab;
+    --error-container: #93000a;
+    --success-container: #0f4b1c;
+    --on-background: #ffedea;
+    /* En oscuro, primary pasa a ser un tono claro (pensado para texto/acentos,
+       no para superficies grandes). Para el panel institucional del login
+       usamos secondary-container, que sí está pensado como color de superficie. */
+    --login-hero: var(--secondary-container);
+    --on-login-hero: var(--on-secondary-container);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--on-background);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Escala de zoom de la interfaz: como el resto del sistema (texto, íconos,
+     espaciados) está definido en rem, agrandar el font-size de la raíz
+     escala todo junto en vez de solo el texto. */
+  html {
+    transition: font-size 200ms ease;
+  }
+  html.texto-grande {
+    font-size: 112.5%; /* 18px base */
+  }
+  html.texto-extra-grande {
+    font-size: 125%; /* 20px base */
+  }
+
+  /* El popup del calendario nativo no se puede estilizar con CSS custom,
+     pero color-scheme le dice al browser qué paleta usar para sus controles.
+     Sin esto, en dark mode el calendario puede aparecer con texto negro
+     sobre fondo negro porque el browser no sabe que estamos en dark mode
+     (usamos clase CSS, no prefers-color-scheme). */
+  input[type="date"] {
+    color-scheme: light;
+  }
+  .dark input[type="date"] {
+    color-scheme: dark;
+  }
+}
+
+/* --- SCROLLBAR PERSONALIZADA --- */
+@layer utilities {
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: var(--outline-variant) transparent; 
+  }
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 0.375rem; /* 6px */
+  }
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: var(--outline-variant); 
+    border-radius: 0.625rem; /* 10px */
+  }
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary);
+  }
+}
+
+/* Durante el cambio de tema, todos los elementos usan exactamente la misma
+   duración, sobreescribiendo cualquier transition de Tailwind o inline. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 300ms ease,
+    color            300ms ease,
+    border-color     300ms ease,
+    fill             300ms ease,
+    stroke           300ms ease !important;
+}
+
+/* Excepción: el slider del toggle de tema conserva su animación de deslizamiento.
+   Mayor especificidad (0,2,1) que la regla general (0,1,1), por lo que gana
+   aunque ambas usen !important. */
+html.theme-switching .theme-toggle-slider,
+html.theme-switching .theme-toggle-slider::before {
+  transition: 0.4s !important;
+}
+
+.theme-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem;  /* 56px */
+    height: 1.75rem; /* 28px */
+}
+
+.theme-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-surface-container-high);
+    transition: .4s;
+    border-radius: 2.125rem; /* 34px */
+    border: 1px solid var(--color-outline-variant); 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.25rem; /* 4px */
+}
+
+.theme-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 1.25rem; /* 20px */
+    width: 1.25rem;  /* 20px */
+    left: 0.1875rem; /* 3px */
+    bottom: 0.1875rem; /* 3px */
+    background-color: var(--color-primary);
+    transition: .4s;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+input:checked + .theme-toggle-slider:before {
+    transform: translateX(1.75rem); /* 28px */
+}
+
+/* Deslizador grande genérico (mismo tamaño que theme-toggle-switch, 56x28) para
+   estados on/off binarios que necesitan más superficie de toque que un checkbox
+   nativo, p.ej. Presente/Ausente en Pasar Lista. */
+.switch-lg {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem;  /* 56px */
+    height: 1.75rem; /* 28px */
+    flex-shrink: 0;
+}
+
+.switch-lg input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-lg-track {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-surface-container-high);
+    transition: .4s;
+    border-radius: 2.125rem; /* 34px */
+    border: 1px solid var(--color-outline-variant);
+}
+
+.switch-lg-track:before {
+    position: absolute;
+    content: "";
+    height: 1.25rem; /* 20px */
+    width: 1.25rem;  /* 20px */
+    left: 0.1875rem; /* 3px */
+    bottom: 0.1875rem; /* 3px */
+    background-color: var(--color-background);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .switch-lg-track {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+input:checked + .switch-lg-track:before {
+    transform: translateX(1.75rem); /* 28px */
+}
+
+input:disabled + .switch-lg-track {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+.theme-toggle-icon {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1;
+    width: 0.875rem;  /* 14px */
+    height: 0.875rem; /* 14px */
+    z-index: 1;
+    color: var(--on-surface-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}

@@ -1,0 +1,748 @@
+###############################################################################
+# api.http — Pruebas de endpoints
+#
+# Entidades cubiertas: Personal, Curso, Estudiante (+ seguridad transversal)
+#
+# AUTENTICACIÓN: todas las rutas bajo /api requieren el encabezado
+#   Authorization: Bearer <token>
+# Las únicas excepciones son GET /api (healthcheck) y POST /api/auth/login.
+#
+# PASO 0 OBLIGATORIO: ejecutar la sección AUTENTICACIÓN de abajo para poblar
+# las variables {{tokenAdmin}}, {{tokenDirectivo}}, {{tokenPreceptor}},
+# {{tokenDocente}}, {{tokenEmatp}} y {{tokenMultiRol}}. Sin eso TODO da 401.
+# Los tokens duran lo que indique JWT_EXPIRES_IN (por defecto 1d).
+#
+# CREDENCIALES DEL SEED: la contraseña de cada usuario es la parte local de su
+# email seguida de "2026".  Ej: adiaz@ees7.edu.ar -> adiaz2026
+#
+# Arquitectura de errores: validación con Zod (validate / validateParams) +
+# errorHandler global que mapea:
+#   AppError  -> 401 / 403 / 404 / 409 / 400 (autenticación y autorización)
+#   ZodError  -> 400 "Datos inválidos"
+#   P2002     -> 409 "Ya existe un registro con ese valor"
+#   P2025     -> 404 "No encontrado"
+#   P2003     -> 409 "Hay registros relacionados"
+#
+# Requisitos:
+#   1. Levantar la API:   cd Backend && npm run dev   (o docker compose up)
+#   2. Base con el seed:  cd Backend && npx prisma db seed
+#
+# Valores "existentes" del seed:
+#   Personal id 1   -> adiaz@ees7.edu.ar (Administrador; tiene asignaciones y mesas)
+#   Curso    id 1   -> tiene cursadas/matriculas asociadas (onDelete: Restrict)
+#   Estudiante id 1 -> dni 43935217 (tiene inscripciones y asistencias)
+#
+# MÉTODOS: PUT actualiza (body parcial: los *UpdateSchema son .partial()).
+# PATCH hace la baja lógica (activo = false) y solo existe en las 10 entidades
+# que tienen campo activo. DELETE borra físicamente y es solo del Administrador.
+###############################################################################
+
+@baseURL = http://localhost:3000
+
+
+###############################################################################
+#                              AUTENTICACIÓN
+#  Ejecutar PRIMERO. REST Client guarda la respuesta de cada petición marcada
+#  con "# @name", y de ahí salen las variables de token usadas más abajo.
+###############################################################################
+
+### [EXITO] Login — Administrador (200). Recibe los 100 permisos.
+# @name loginAdmin
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "adiaz@ees7.edu.ar",
+  "contrasenia": "adiaz2026"
+}
+
+@tokenAdmin = {{loginAdmin.response.body.token}}
+
+### [EXITO] Login — Directivo (200). Equipo de conducción: 54 permisos.
+# @name loginDirectivo
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "squiroga@ees7.edu.ar",
+  "contrasenia": "squiroga2026"
+}
+
+@tokenDirectivo = {{loginDirectivo.response.body.token}}
+
+### [EXITO] Login — Preceptor (200). 8 permisos, acotado a sus cursos.
+# @name loginPreceptor
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "cgomez@ees7.edu.ar",
+  "contrasenia": "cgomez2026"
+}
+
+@tokenPreceptor = {{loginPreceptor.response.body.token}}
+
+### [EXITO] Login — Docente / Profesor (200). 15 permisos, acotado a sus cursadas.
+# @name loginDocente
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "lfernandez@ees7.edu.ar",
+  "contrasenia": "lfernandez2026"
+}
+
+@tokenDocente = {{loginDocente.response.body.token}}
+
+### [EXITO] Login — EMATP (200). "Consulta total": los 25 permisos de Ver.
+# @name loginEmatp
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "pnunez@ees7.edu.ar",
+  "contrasenia": "pnunez2026"
+}
+
+@tokenEmatp = {{loginEmatp.response.body.token}}
+
+### [EXITO] Login — usuario con DOS roles: Secretario + Vicedirectivo (200)
+# En la respuesta, "permisos" es la UNIÓN de ambos roles, sin duplicados.
+# @name loginMultiRol
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "mrodriguez@ees7.edu.ar",
+  "contrasenia": "mrodriguez2026"
+}
+
+@tokenMultiRol = {{loginMultiRol.response.body.token}}
+
+### [EXITO] Identidad y permisos efectivos del token actual (200)
+# Ninguna respuesta de auth incluye el campo "contrasenia".
+GET {{baseURL}}/api/auth/yo
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] Los permisos del multi-rol son la unión de sus dos roles (200)
+GET {{baseURL}}/api/auth/yo
+Authorization: Bearer {{tokenMultiRol}}
+
+### [EXITO] Healthcheck — única ruta pública además del login (200)
+GET {{baseURL}}/api
+
+
+###############################################################################
+#                     ERRORES DE AUTENTICACIÓN (401)
+###############################################################################
+
+### [ERROR 400] Login con body inválido: email mal formado y sin contraseña
+# Esperado: 400 { "mensaje": "Datos inválidos", "detalles": [...] }
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "no-es-un-email"
+}
+
+### [ERROR 401 — credenciales] Email correcto, contraseña incorrecta
+# Esperado: 401 { "mensaje": "Email o contraseña incorrectos" }
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "adiaz@ees7.edu.ar",
+  "contrasenia": "contrasenia_incorrecta"
+}
+
+### [ERROR 401 — credenciales] Email que no existe
+# Mismo mensaje genérico a propósito: no se revela qué cuentas existen.
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "nadie@ees7.edu.ar",
+  "contrasenia": "cualquiera123"
+}
+
+### [ERROR 401 — usuario inactivo] fibanez tiene Usuario.activo = false
+# La contraseña es CORRECTA: lo que falla es la comprobación de estado, que se
+# hace DESPUÉS de validar la contraseña para no filtrar qué cuentas existen.
+# Esperado: 401 { "mensaje": "El usuario está inactivo" }
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "fibanez@ees7.edu.ar",
+  "contrasenia": "fibanez2026"
+}
+
+### [ERROR 401 — sin token] Ruta protegida sin encabezado Authorization
+# Esperado: 401 { "mensaje": "Falta el token de autenticación" }
+GET {{baseURL}}/api/estudiantes
+
+### [ERROR 401 — esquema incorrecto] Authorization sin el prefijo "Bearer "
+# Esperado: 401 { "mensaje": "Falta el token de autenticación" }
+GET {{baseURL}}/api/estudiantes
+Authorization: {{tokenAdmin}}
+
+### [ERROR 401 — token inválido] Firma que no corresponde a JWT_SECRET
+# Esperado: 401 { "mensaje": "Token inválido o expirado" }
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjEsInBlcnNvbmFsSWQiOjEsImVtYWlsIjoiYWRpYXpAZWVzNy5lZHUuYXIiLCJpYXQiOjE3NjcyMjU2MDB9.firma_invalida_a_proposito
+
+### [ERROR 401 — token mal formado] Cadena que no es un JWT
+# Esperado: 401 { "mensaje": "Token inválido o expirado" }
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer esto-no-es-un-jwt
+
+
+###############################################################################
+#                      ERRORES DE AUTORIZACIÓN (403)
+#  Token VÁLIDO, pero el rol no tiene el permiso que exige la ruta.
+#  Referencia: matriz-permisos.md
+###############################################################################
+
+### [CONTRASTE 200] El Docente SÍ puede ver Seguimiento y Evaluación
+# Tiene "Ver Cargas Numéricas". Solo devuelve las de SUS cursadas.
+GET {{baseURL}}/api/cargas-numericas
+Authorization: Bearer {{tokenDocente}}
+
+### [ERROR 403] El Docente intenta CREAR un estudiante
+# POST exige "Crear Estudiantes", que solo tienen Administrador y conducción.
+# Esperado: 403 y NO 400, aunque el body esté vacío: authorize corre ANTES
+# que validate.
+POST {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenDocente}}
+Content-Type: application/json
+
+{}
+
+### [ERROR 403] El Preceptor intenta ver calificaciones
+# "Ver Cargas Numéricas" no está entre sus 8 permisos.
+# Esperado: 403 { "mensaje": "No tenés permiso para realizar esta acción" }
+GET {{baseURL}}/api/cargas-numericas
+Authorization: Bearer {{tokenPreceptor}}
+
+### [ERROR 403] El Preceptor intenta dar de baja un estudiante (PATCH)
+# El PATCH exige "Editar Estudiantes"; el Preceptor solo tiene "Ver Estudiantes".
+# Esperado: 403
+PATCH {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenPreceptor}}
+
+### [CONTRASTE 200] El Directivo SÍ puede dar de baja un estudiante
+# Tiene "Editar Estudiantes". Devuelve la fila con activo: false.
+PATCH {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenDirectivo}}
+
+### [ERROR 403] El Directivo intenta BORRAR un estudiante
+# El DELETE exige "Eliminar Estudiantes", exclusivo del Administrador: la
+# conducción da de baja con PATCH, no borra el historial académico.
+# Esperado: 403
+DELETE {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenDirectivo}}
+
+### [CONTRASTE] El Directivo SÍ borra estructura institucional
+# Sobre aulas / bloques-horarios / materias / orientaciones la conducción tiene
+# gestión completa, borrado incluido. Puede dar 200 o 409 si tiene cursadas
+# asociadas; lo que importa es que NO da 403.
+DELETE {{baseURL}}/api/materias/12
+Authorization: Bearer {{tokenDirectivo}}
+
+### [ERROR 403] El Directivo intenta listar los usuarios del sistema
+# usuarios / roles / permisos son exclusivos del Administrador.
+# Esperado: 403
+GET {{baseURL}}/api/usuarios
+Authorization: Bearer {{tokenDirectivo}}
+
+### [CONTRASTE 200] El EMATP tiene "consulta total": ve cualquier recurso
+GET {{baseURL}}/api/aulas
+Authorization: Bearer {{tokenEmatp}}
+
+### [CONTRASTE 200] El EMATP también ve usuarios (es Ver, no gestión)
+GET {{baseURL}}/api/usuarios
+Authorization: Bearer {{tokenEmatp}}
+
+### [ERROR 403] El EMATP intenta CREAR un aula — es solo lectura
+# Esperado: 403
+POST {{baseURL}}/api/aulas
+Authorization: Bearer {{tokenEmatp}}
+Content-Type: application/json
+
+{
+  "nombre": "Aula EMATP",
+  "capacidad": 30,
+  "activo": true
+}
+
+### [ERROR 403] El Preceptor intenta editar personal
+# Recursos Humanos es del Administrador y de la conducción.
+# Esperado: 403
+PUT {{baseURL}}/api/personal/2
+Authorization: Bearer {{tokenPreceptor}}
+Content-Type: application/json
+
+{
+  "telefono": "2219999999"
+}
+
+
+###############################################################################
+#                    ALCANCE POR FILA (Preceptor / Profesor)
+#  authorize decide QUÉ operación; el alcance decide SOBRE QUÉ FILAS.
+#  Preceptor -> los cursos donde tiene asignación horaria.
+#  Profesor  -> las cursadas (curso + materia) que dicta.
+###############################################################################
+
+### [EXITO] El Preceptor cgomez ve solo los estudiantes de su curso (id 1)
+# Comparar la cantidad de filas con el mismo GET usando {{tokenAdmin}}.
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenPreceptor}}
+
+### [CONTRASTE] El Administrador ve TODOS los estudiantes
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] El Docente también ve estudiantes, pero solo sus inscriptos
+# El Profesor tiene "Ver Estudiantes" para consultar los alumnos de sus
+# cursadas: el listado viene acotado, no es el padrón completo.
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenDocente}}
+
+### [ERROR 404 — fuera de alcance] Un estudiante que no es de su curso
+# Se responde 404 y no 403 a propósito: a quien no debe ver la fila no se le
+# confirma que exista. Probar con un id que el listado del Preceptor NO devuelva.
+GET {{baseURL}}/api/estudiantes/9
+Authorization: Bearer {{tokenPreceptor}}
+
+### [EXITO] El Profesor lfernandez ve solo las cargas de sus cursadas
+# Su asignación horaria es curso 1 + materia 1 (Matemática de 1°A).
+GET {{baseURL}}/api/cargas-numericas
+Authorization: Bearer {{tokenDocente}}
+
+### [EXITO] El Preceptor registra una inasistencia (201)
+# Tiene "Crear Asistencias Institucionales" sobre los alumnos de sus cursos.
+POST {{baseURL}}/api/asistencias-institucionales
+Authorization: Bearer {{tokenPreceptor}}
+Content-Type: application/json
+
+{
+  "estudianteDni": 43935217,
+  "fecha": "2026-09-06",
+  "tipo": "FaltaCompleta",
+  "justificada": false
+}
+
+
+###############################################################################
+#                          REGISTRO DE USUARIOS
+#  POST /api/auth/register crea el Usuario de un Personal que YA existe:
+#  Usuario.personalId es FK obligatoria y @unique, así que no hay auto-registro
+#  posible. Por eso exige token + "Crear Usuarios" (solo el Administrador).
+###############################################################################
+
+### [ERROR 401] Register sin token — no es un endpoint público
+# Esperado: 401 { "mensaje": "Falta el token de autenticación" }
+POST {{baseURL}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "tledesma2026",
+  "roles": ["Docente"]
+}
+
+### [ERROR 403] Register con token de Docente — le falta "Crear Usuarios"
+# Esperado: 403 { "mensaje": "No tenés permiso para realizar esta acción" }
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenDocente}}
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "tledesma2026",
+  "roles": ["Docente"]
+}
+
+### [EXITO] Register — tledesma es el único Personal del seed SIN Usuario (201)
+# Devuelve { id, personalId, email, nombre, apellido, roles, permisos } y NUNCA
+# el campo "contrasenia". Ejecutarlo dos veces da 409.
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "tledesma2026",
+  "roles": ["Docente"]
+}
+
+### [EXITO] Login del usuario recién registrado (200)
+# Prueba que register hasheó la contraseña con bcrypt.
+POST {{baseURL}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "tledesma2026"
+}
+
+### [ERROR 409] Register de un Personal que YA tiene usuario
+# Esperado: 409 { "mensaje": "Ese personal ya tiene un usuario asignado" }
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "email": "adiaz@ees7.edu.ar",
+  "contrasenia": "otracontra123",
+  "roles": ["Docente"]
+}
+
+### [ERROR 404] Register con un email que no es de ningún Personal
+# Esperado: 404 { "mensaje": "No existe personal registrado con ese email" }
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "email": "fantasma@ees7.edu.ar",
+  "contrasenia": "fantasma123",
+  "roles": ["Docente"]
+}
+
+### [ERROR 400] Register con contraseña corta
+# Esperado: 400 "Datos inválidos" (registerSchema exige min(8)).
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "corta",
+  "roles": ["Docente"]
+}
+
+### [ERROR 400] Register con un rol inexistente
+# Esperado: 400 { "mensaje": "Uno o más roles no existen",
+#                 "detalles": { "rolesInexistentes": ["RolInventado"] } }
+POST {{baseURL}}/api/auth/register
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "email": "tledesma@ees7.edu.ar",
+  "contrasenia": "tledesma2026",
+  "roles": ["RolInventado"]
+}
+
+
+###############################################################################
+#                                 PERSONAL
+###############################################################################
+
+### [EXITO] GET general — lista todo el personal (200)
+GET {{baseURL}}/api/personal
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] GET por ID válido — personal existente del seed (200)
+GET {{baseURL}}/api/personal/1
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] POST — alta con datos estructuralmente correctos (201)
+# email y dni NUEVOS (no chocan con el seed). Si se corre dos veces, la 2da vez
+# dará 409 P2002 porque email es @unique.
+POST {{baseURL}}/api/personal
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "Prueba",
+  "cuil": "20-40000001-2",
+  "dni": 40000001,
+  "email": "qa.personal@ees7.edu.ar",
+  "nombre": "QA",
+  "telefono": "2211234567",
+  "fechaIngreso": "2026-08-27"
+}
+
+### [EXITO] PUT — actualización parcial de un registro existente (200)
+# body parcial válido (personalUpdateSchema = personalCreateSchema.partial()).
+# OJO: Personal id 1 es adiaz, el Administrador. NO mandar "activo": false acá:
+# authenticate exige personal.activo, así que se quedaría sin poder loguear y
+# bloquearía todas las demás pruebas. Para la baja lógica está el PATCH.
+PUT {{baseURL}}/api/personal/1
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "telefono": "2211234500"
+}
+
+### [ERROR 400 — body mal formado] Fuerza la validación de Zod
+# nombre vacío, dni con tipo incorrecto (string), email sin formato válido.
+# Esperado: 400 { "mensaje": "Datos inválidos", "detalles": [ { "campo": "...", "mensaje": "..." } ] }
+POST {{baseURL}}/api/personal
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "X",
+  "cuil": "20-1-2",
+  "dni": "no-soy-un-numero",
+  "email": "correo-invalido",
+  "nombre": "",
+  "telefono": "1",
+  "fechaIngreso": "2026-01-01"
+}
+
+### [ERROR 400 — ID inválido] Texto en la URL en lugar de número
+# validateParams(idParamSchema) rechaza porque z.coerce.number() produce NaN.
+# Esperado: 400 "Datos inválidos"
+GET {{baseURL}}/api/personal/abc
+Authorization: Bearer {{tokenAdmin}}
+
+### [ERROR 404 — no encontrado / P2025] PUT a un ID numérico inexistente
+# El body es un parcial válido (personalUpdateSchema.partial()) para pasar la
+# validación y llegar a prisma.personal.update, que lanza P2025.
+# Esperado: 404 { "mensaje": "No encontrado" }
+# NOTA: un GET /api/personal/9999 ahora devuelve 200 con null (se quitó el guard
+# manual del happy-path); para forzar P2025 hay que usar PUT o DELETE.
+PUT {{baseURL}}/api/personal/9999
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": false
+}
+
+### [ERROR 409 — @unique / P2002] POST con un email que YA existe en el seed
+# Personal.email es @unique. adiaz@ees7.edu.ar ya está cargado.
+# Esperado: 409 { "mensaje": "Ya existe un registro con ese valor" }
+POST {{baseURL}}/api/personal
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "Duplicado",
+  "cuil": "20-40000009-9",
+  "dni": 40000009,
+  "email": "adiaz@ees7.edu.ar",
+  "nombre": "Colision",
+  "telefono": "2211111111",
+  "fechaIngreso": "2026-08-27"
+}
+
+### [ERROR 409 — FK / P2003] DELETE de un padre con hijos (onDelete: Restrict)
+# Personal id 1 tiene AsignacionHoraria y MesasDeExamen asociadas (Restrict).
+# Esperado: 409 { "mensaje": "Hay registros relacionados" }
+DELETE {{baseURL}}/api/personal/1
+Authorization: Bearer {{tokenAdmin}}
+
+
+###############################################################################
+#                                  CURSO
+###############################################################################
+
+### [EXITO] GET general — lista todos los cursos (200)
+GET {{baseURL}}/api/cursos
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] GET por ID válido — curso existente del seed (200)
+GET {{baseURL}}/api/cursos/1
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] POST — alta con datos estructuralmente correctos (201)
+# turno debe ser uno de: "Maniana" | "Tarde" | "Noche" (nombres del enum Prisma).
+POST {{baseURL}}/api/cursos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nivel": 3,
+  "nombre": "QA",
+  "turno": "Maniana",
+  "activo": true
+}
+
+### [EXITO] PUT — actualización parcial de un curso existente (200)
+# body parcial válido (cursoUpdateSchema = cursoCreateSchema.partial()).
+# Caso típico: "desactivar" el curso.
+PUT {{baseURL}}/api/cursos/1
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": false
+}
+
+### [ERROR 400 — body mal formado] Fuerza la validación de Zod
+# "nombre" omitido (requerido) y "turno" con valor fuera del enum ("Mañana" con ñ).
+# Esperado: 400 "Datos inválidos"
+POST {{baseURL}}/api/cursos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nivel": 2,
+  "turno": "Mañana",
+  "activo": true
+}
+
+### [ERROR 400 — ID inválido] Texto en la URL en lugar de número
+# Esperado: 400 "Datos inválidos"
+GET {{baseURL}}/api/cursos/abc
+Authorization: Bearer {{tokenAdmin}}
+
+### [ERROR 404 — no encontrado / P2025] PUT a un ID numérico inexistente
+# body parcial válido (cursoUpdateSchema.partial()) -> llega a prisma.curso.update -> P2025.
+# Esperado: 404 { "mensaje": "No encontrado" }
+PUT {{baseURL}}/api/cursos/9999
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nombre": "Inexistente"
+}
+
+### [ERROR 409 — @unique / P2002] *** NO APLICABLE CON EL SCHEMA ACTUAL ***
+# El modelo Curso NO tiene ninguna columna @unique en schema.prisma, por lo que
+# NO es posible disparar P2002 sobre esta entidad: esta petición creará una fila
+# "duplicada" y responderá 201, no 409.
+# Para poder testear el conflicto habría que agregar en el schema, por ejemplo:
+#   @@unique([nombre, nivel, turno])
+# (P2002 sí es testeable en Personal por email y en Estudiante por dni — ver arriba/abajo.)
+POST {{baseURL}}/api/cursos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nivel": 1,
+  "nombre": "A",
+  "turno": "Maniana",
+  "activo": true
+}
+
+### [ERROR 409 — FK / P2003] DELETE de un padre con hijos (onDelete: Restrict)
+# Curso id 1 tiene Cursada y Matricula asociadas (Restrict).
+# Esperado: 409 { "mensaje": "Hay registros relacionados" }
+DELETE {{baseURL}}/api/cursos/1
+Authorization: Bearer {{tokenAdmin}}
+
+
+###############################################################################
+#                                ESTUDIANTE
+###############################################################################
+
+### [EXITO] GET general — lista todos los estudiantes (200)
+GET {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] GET por ID válido — estudiante existente del seed (200)
+GET {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenAdmin}}
+
+### [EXITO] POST — alta con datos estructuralmente correctos (201)
+# dni NUEVO (no choca con el seed). Si se corre dos veces, la 2da vez dará
+# 409 P2002 porque dni es @unique.
+POST {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "QA",
+  "cuil": "27-40000002-3",
+  "dni": 40000002,
+  "email": "qa.estudiante@test.com",
+  "nombre": "Testing",
+  "telefono": "2210000000",
+  "folio": 999,
+  "libro": 1,
+  "estado": "Regular",
+  "fechaNacimiento": "2006-01-15",
+  "nacionalidad": "Argentina",
+  "edad": 19
+}
+
+### [EXITO] PUT — actualización parcial de un estudiante existente (200)
+# body parcial válido (estudianteUpdateSchema = estudianteCreateSchema.partial()).
+# Caso típico: cambiar el estado o "desactivar".
+PUT {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": false
+}
+
+### [ERROR 400 — body mal formado] Fuerza la validación de Zod
+# edad con tipo incorrecto (string), estado fuera del enum, email sin formato.
+# Esperado: 400 "Datos inválidos"
+POST {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "QA",
+  "cuil": "x",
+  "dni": 123,
+  "email": "no-mail",
+  "nombre": "Test",
+  "telefono": "1",
+  "folio": 1,
+  "libro": 1,
+  "estado": "SuperRegular",
+  "fechaNacimiento": "2000-01-01",
+  "nacionalidad": "AR",
+  "edad": "veinte"
+}
+
+### [ERROR 400 — ID inválido] Texto en la URL en lugar de número
+# Esperado: 400 "Datos inválidos"
+GET {{baseURL}}/api/estudiantes/xyz
+Authorization: Bearer {{tokenAdmin}}
+
+### [ERROR 404 — no encontrado / P2025] PUT a un ID numérico inexistente
+# body parcial válido (estudianteUpdateSchema.partial()) -> prisma.estudiante.update -> P2025.
+# Esperado: 404 { "mensaje": "No encontrado" }
+PUT {{baseURL}}/api/estudiantes/9999
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "estado": "Egresado"
+}
+
+### [ERROR 409 — @unique / P2002] POST con un dni que YA existe en el seed
+# Estudiante.dni es @unique. 43935217 ya está cargado (Carolina Ramos).
+# Esperado: 409 { "mensaje": "Ya existe un registro con ese valor" }
+POST {{baseURL}}/api/estudiantes
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "activo": true,
+  "apellido": "Duplicado",
+  "cuil": "27-43935217-7",
+  "dni": 43935217,
+  "email": "colision.dni@test.com",
+  "nombre": "Colision",
+  "telefono": "2210000001",
+  "folio": 1,
+  "libro": 1,
+  "estado": "Regular",
+  "fechaNacimiento": "2005-05-05",
+  "nacionalidad": "Argentina",
+  "edad": 20
+}
+
+### [ERROR 409 — FK / P2003] DELETE de un padre con hijos (onDelete: Restrict)
+# Estudiante id 1 (dni 43935217) tiene Inscripcion y AsistenciaInstitucional (Restrict).
+# Esperado: 409 { "mensaje": "Hay registros relacionados" }
+DELETE {{baseURL}}/api/estudiantes/1
+Authorization: Bearer {{tokenAdmin}}

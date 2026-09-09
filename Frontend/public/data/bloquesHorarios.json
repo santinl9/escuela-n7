@@ -1,0 +1,33 @@
+[
+  { "id": 1,  "cursadaId": 1,  "dia": "Lunes",     "horaIni": "08:00", "horaFin": "09:30" },
+  { "id": 2,  "cursadaId": 2,  "dia": "Lunes",     "horaIni": "09:30", "horaFin": "11:00" },
+  { "id": 3,  "cursadaId": 9,  "dia": "Martes",    "horaIni": "08:00", "horaFin": "09:30" },
+  { "id": 4,  "cursadaId": 7,  "dia": "Miercoles", "horaIni": "10:00", "horaFin": "11:30" },
+  { "id": 5,  "cursadaId": 13, "dia": "Jueves",    "horaIni": "14:00", "horaFin": "15:30" },
+  { "id": 6,  "cursadaId": 3,  "dia": "Viernes",   "horaIni": "08:00", "horaFin": "09:30" },
+
+  { "id": 7,  "dia": "Lunes",     "horaIni": "08:00", "horaFin": "14:00" },
+  { "id": 8,  "cursadaId": 4,  "dia": "Lunes",     "horaIni": "07:30", "horaFin": "13:00" },
+  { "id": 9,  "dia": "Martes",    "horaIni": "08:00", "horaFin": "14:00" },
+  { "id": 10, "dia": "Miercoles", "horaIni": "08:00", "horaFin": "12:00" },
+  { "id": 11, "cursadaId": 5,  "dia": "Jueves",    "horaIni": "07:30", "horaFin": "13:00" },
+  { "id": 12, "cursadaId": 6,  "dia": "Viernes",   "horaIni": "08:00", "horaFin": "12:00" },
+  { "id": 13, "dia": "Lunes",     "horaIni": "14:00", "horaFin": "18:00" },
+  { "id": 14, "dia": "Martes",    "horaIni": "14:00", "horaFin": "18:00" },
+  { "id": 15, "cursadaId": 8,  "dia": "Viernes",   "horaIni": "13:00", "horaFin": "18:00" },
+  { "id": 16, "cursadaId": 10, "dia": "Miercoles", "horaIni": "08:00", "horaFin": "12:00" },
+
+  { "id": 17, "dia": "Martes",    "horaIni": "09:00", "horaFin": "13:00" },
+  { "id": 18, "dia": "Miercoles", "horaIni": "10:00", "horaFin": "16:00" },
+  { "id": 19, "dia": "Jueves",    "horaIni": "08:00", "horaFin": "12:00" },
+  { "id": 20, "dia": "Viernes",   "horaIni": "09:00", "horaFin": "15:00" },
+
+  { "id": 21, "cursadaId": 22, "dia": "Martes",    "horaIni": "10:00", "horaFin": "11:30" },
+  { "id": 22, "cursadaId": 23, "dia": "Jueves",    "horaIni": "08:00", "horaFin": "09:30" },
+  { "id": 23, "cursadaId": 24, "dia": "Lunes",     "horaIni": "11:00", "horaFin": "12:30" },
+  { "id": 24, "cursadaId": 25, "dia": "Miercoles", "horaIni": "09:00", "horaFin": "10:30" },
+  { "id": 25, "cursadaId": 26, "dia": "Viernes",   "horaIni": "10:00", "horaFin": "11:30" },
+
+  { "id": 26, "dia": "Lunes",     "horaIni": "08:00", "horaFin": "12:00" },
+  { "id": 27, "dia": "Miercoles", "horaIni": "08:00", "horaFin": "12:00" }
+]

@@ -1,0 +1,5 @@
+[
+  { "id": 1, "fechaIni": "2024-03-01", "fechaFin": "2025-02-28", "activo": false },
+  { "id": 2, "fechaIni": "2025-03-01", "fechaFin": "2026-02-28", "activo": false },
+  { "id": 3, "fechaIni": "2026-03-02", "fechaFin": "2027-02-28", "activo": true }
+]

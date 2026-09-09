@@ -1,0 +1,451 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SituacionRevista {
+  Titular
+  Provisional
+  Suplente
+  TitularInterino    @map("Titular Interino")
+  ServicioProvisorio @map("Servicio Provisorio")
+}
+
+enum TipoCargo {
+  Auxiliar
+  Directivo
+  EMATP
+  Preceptor
+  Profesor
+  Prosecretario
+  Secretario
+  Vicedirectivo
+}
+
+enum TipoAsistencia {
+  AsistenciaCompleta @map("Asistencia Completa")
+  FaltaCompleta      @map("Falta Completa")
+  MediaFalta         @map("Media Falta")
+}
+
+enum DiaSemana {
+  Lunes
+  Martes
+  Miercoles
+  Jueves
+  Viernes
+  Sabado
+}
+
+enum TipoCursada {
+  Curricular
+  Extracurricular
+}
+
+enum Turno {
+  Maniana
+  Tarde
+  Noche
+}
+
+enum EstadoEstudiante {
+  Regular
+  Libre
+  Desertor
+  Egresado
+}
+
+enum TipoInscripcion {
+  Normal
+  Recupera
+  Intensifica
+  Oyente
+}
+
+enum EstadoInscripcion {
+  Aprobada
+  Libre
+  Regular
+  Desaprobado
+  Discontinuo
+}
+
+enum NotaValorativa {
+  TEA
+  TEP
+  TED
+}
+
+enum TipoCalificacion {
+  Numerica
+  Valorativa
+  Intensificacion
+}
+
+model AsignacionHoraria {
+  id                          Int              @id @default(autoincrement())
+  personalId                  Int
+  tipoCargo                   TipoCargo
+  situacionRevista            SituacionRevista
+  fechaIni                    String
+  fechaFin                    String
+  asignacionHorariaCubiertaId Int?
+  // Solo se completa en las asignaciones de tipoCargo Profesor: junto con
+  // `cursos` determina exactamente que cursadas dicta (curso + materia).
+  materiaId                   Int?
+
+  personal                  Personal            @relation(fields: [personalId], references: [id], onDelete: Restrict)
+  asignacionHorariaCubierta AsignacionHoraria?  @relation("CoberturaAsignacion", fields: [asignacionHorariaCubiertaId], references: [id], onDelete: SetNull)
+  coberturas                AsignacionHoraria[] @relation("CoberturaAsignacion")
+  materia                   Materia?            @relation(fields: [materiaId], references: [id], onDelete: SetNull)
+
+  bloquesHorarios BloqueHorario[] @relation("AsignacionBloque")
+  cursos          Curso[]         @relation("AsignacionCurso")
+
+  @@index([personalId])
+  @@index([asignacionHorariaCubiertaId])
+  @@index([materiaId])
+}
+
+model AsistenciaInstitucional {
+  id            Int            @id @default(autoincrement())
+  estudianteDni Int
+  fecha         String
+  tipo          TipoAsistencia
+  justificada   Boolean
+
+  estudiante Estudiante @relation(fields: [estudianteDni], references: [dni], onDelete: Restrict)
+
+  @@index([estudianteDni])
+}
+
+model Aula {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  capacidad Int
+  activo    Boolean
+
+  cursadas Cursada[]
+}
+
+model BloqueHorario {
+  id        Int       @id @default(autoincrement())
+  cursadaId Int?
+  dia       DiaSemana
+  horaIni   String
+  horaFin   String
+
+  cursada      Cursada?            @relation(fields: [cursadaId], references: [id], onDelete: SetNull)
+  asignaciones AsignacionHoraria[] @relation("AsignacionBloque")
+
+  @@index([cursadaId])
+}
+
+model CargaIntensificacion {
+  id                Int @id @default(autoincrement())
+  inscripcionId     Int
+  periodoCargaId    Int
+  calificacionFinal Int
+
+  inscripcion  Inscripcion  @relation(fields: [inscripcionId], references: [id], onDelete: Cascade)
+  periodoCarga PeriodoCarga @relation(fields: [periodoCargaId], references: [id], onDelete: Restrict)
+
+  @@index([inscripcionId])
+  @@index([periodoCargaId])
+}
+
+model CargaNumerica {
+  id             Int    @id @default(autoincrement())
+  inscripcionId  Int
+  periodoCargaId Int
+  calificacion   Float?
+  inasistencias  Int?
+
+  inscripcion  Inscripcion  @relation(fields: [inscripcionId], references: [id], onDelete: Cascade)
+  periodoCarga PeriodoCarga @relation(fields: [periodoCargaId], references: [id], onDelete: Restrict)
+
+  @@index([inscripcionId])
+  @@index([periodoCargaId])
+}
+
+model CargaValorativa {
+  id             Int             @id @default(autoincrement())
+  inscripcionId  Int
+  periodoCargaId Int
+  calificacion   NotaValorativa?
+  inasistencias  Int?
+
+  inscripcion  Inscripcion  @relation(fields: [inscripcionId], references: [id], onDelete: Cascade)
+  periodoCarga PeriodoCarga @relation(fields: [periodoCargaId], references: [id], onDelete: Restrict)
+
+  @@index([inscripcionId])
+  @@index([periodoCargaId])
+}
+
+model CicloLectivo {
+  id       Int     @id @default(autoincrement())
+  fechaIni String
+  fechaFin String
+  activo   Boolean
+
+  cursadas      Cursada[]
+  periodosCarga PeriodoCarga[]
+  mesasDeExamen MesasDeExamen[]
+}
+
+model ContactoEmergencia {
+  id            Int     @id @default(autoincrement())
+  estudianteDni Int
+  activo        Boolean
+  apellido      String
+  cuil          String
+  dni           Int
+  email         String
+  nombre        String
+  telefono      String
+
+  estudiante Estudiante @relation(fields: [estudianteDni], references: [dni], onDelete: Cascade)
+
+  @@index([estudianteDni])
+}
+
+model Cursada {
+  id             Int         @id @default(autoincrement())
+  cantidadClases Int
+  tipo           TipoCursada
+  cursoId        Int
+  materiaId      Int
+  aulaId         Int
+  cicloLectivoId Int
+
+  curso        Curso        @relation(fields: [cursoId], references: [id], onDelete: Restrict)
+  materia      Materia      @relation(fields: [materiaId], references: [id], onDelete: Restrict)
+  aula         Aula         @relation(fields: [aulaId], references: [id], onDelete: Restrict)
+  cicloLectivo CicloLectivo @relation(fields: [cicloLectivoId], references: [id], onDelete: Restrict)
+
+  bloquesHorarios          BloqueHorario[]
+  inscripciones            Inscripcion[]   @relation("InscripcionCursada")
+  inscripcionesIntensifica Inscripcion[]   @relation("InscripcionIntensificacion")
+
+  @@index([cursoId])
+  @@index([materiaId])
+  @@index([aulaId])
+  @@index([cicloLectivoId])
+}
+
+model Curso {
+  id            Int     @id @default(autoincrement())
+  nivel         Int
+  nombre        String
+  turno         Turno
+  activo        Boolean
+  orientacionId Int?
+
+  orientacion Orientacion? @relation(fields: [orientacionId], references: [id], onDelete: SetNull)
+
+  cursadas     Cursada[]
+  matriculas   Matricula[]
+  asignaciones AsignacionHoraria[] @relation("AsignacionCurso")
+
+  @@index([orientacionId])
+}
+
+model Domicilio {
+  id            Int    @id @default(autoincrement())
+  estudianteDni Int
+  calle         String
+  numero        Int
+
+  estudiante Estudiante @relation(fields: [estudianteDni], references: [dni], onDelete: Cascade)
+
+  @@index([estudianteDni])
+}
+
+model Estudiante {
+  id              Int              @id @default(autoincrement())
+  activo          Boolean
+  apellido        String
+  cuil            String
+  dni             Int              @unique
+  email           String
+  nombre          String
+  telefono        String
+  folio           Int
+  libro           Int
+  estado          EstadoEstudiante
+  fechaNacimiento String
+  nacionalidad    String
+  edad            Int
+
+  asistencias         AsistenciaInstitucional[]
+  contactosEmergencia ContactoEmergencia[]
+  domicilios          Domicilio[]
+  inscripciones       Inscripcion[]
+  inscripcionesMesa   InscripcionMesa[]
+  matriculas          Matricula[]
+}
+
+model Inscripcion {
+  id                       Int               @id @default(autoincrement())
+  estudianteDni            Int
+  cursadaId                Int
+  tipo                     TipoInscripcion
+  cursadaIntensificacionId Int?
+  estado                   EstadoInscripcion
+  fecha                    String
+  notaFinal                Int?
+
+  estudiante             Estudiante @relation(fields: [estudianteDni], references: [dni], onDelete: Restrict)
+  cursada                Cursada    @relation("InscripcionCursada", fields: [cursadaId], references: [id], onDelete: Restrict)
+  cursadaIntensificacion Cursada?   @relation("InscripcionIntensificacion", fields: [cursadaIntensificacionId], references: [id], onDelete: SetNull)
+
+  cargasIntensificacion CargaIntensificacion[]
+  cargasNumericas       CargaNumerica[]
+  cargasValorativas     CargaValorativa[]
+
+  @@index([estudianteDni])
+  @@index([cursadaId])
+  @@index([cursadaIntensificacionId])
+}
+
+model InscripcionMesa {
+  id               Int     @id @default(autoincrement())
+  mesaId           Int
+  estudianteDni    Int
+  fechaInscripcion String
+  nota             Int?
+  asistio          Boolean
+
+  mesa       MesasDeExamen @relation(fields: [mesaId], references: [id], onDelete: Cascade)
+  estudiante Estudiante    @relation(fields: [estudianteDni], references: [dni], onDelete: Restrict)
+
+  @@index([mesaId])
+  @@index([estudianteDni])
+}
+
+model Materia {
+  id         Int     @id @default(autoincrement())
+  nombre     String
+  nivel      Int
+  activo     Boolean
+  curricular Boolean
+
+  cursadas      Cursada[]
+  mesasDeExamen MesasDeExamen[]
+  asignaciones  AsignacionHoraria[]
+}
+
+model Matricula {
+  id            Int    @id @default(autoincrement())
+  estudianteDni Int
+  cursoId       Int
+  fecha         String
+
+  estudiante Estudiante @relation(fields: [estudianteDni], references: [dni], onDelete: Restrict)
+  curso      Curso      @relation(fields: [cursoId], references: [id], onDelete: Restrict)
+
+  @@index([estudianteDni])
+  @@index([cursoId])
+}
+
+model MesasDeExamen {
+  id             Int    @id @default(autoincrement())
+  materiaId      Int
+  personalId     Int
+  cicloLectivoId Int
+  fecha          String
+  hora           String
+  cupo           Int
+
+  materia      Materia      @relation(fields: [materiaId], references: [id], onDelete: Restrict)
+  personal     Personal     @relation(fields: [personalId], references: [id], onDelete: Restrict)
+  cicloLectivo CicloLectivo @relation(fields: [cicloLectivoId], references: [id], onDelete: Restrict)
+
+  inscripciones InscripcionMesa[]
+
+  @@index([materiaId])
+  @@index([personalId])
+  @@index([cicloLectivoId])
+}
+
+model Orientacion {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  activo Boolean @default(true)
+
+  cursos Curso[]
+}
+
+model PeriodoCarga {
+  id             Int              @id @default(autoincrement())
+  descripcion    String
+  fechaIni       String
+  fechaFin       String
+  tipo           TipoCalificacion
+  cicloLectivoId Int
+
+  cicloLectivo CicloLectivo @relation(fields: [cicloLectivoId], references: [id], onDelete: Restrict)
+
+  cargasIntensificacion CargaIntensificacion[]
+  cargasNumericas       CargaNumerica[]
+  cargasValorativas     CargaValorativa[]
+
+  @@index([cicloLectivoId])
+}
+
+model Permiso {
+  id          Int    @id @default(autoincrement())
+  codigo      String @unique
+  descripcion String @unique
+
+  roles Rol[] @relation("RolPermiso")
+}
+
+model Persona {
+  id       Int     @id @default(autoincrement())
+  activo   Boolean
+  apellido String
+  cuil     String
+  dni      Int
+  email    String
+  nombre   String
+  telefono String
+}
+
+model Personal {
+  id           Int     @id @default(autoincrement())
+  activo       Boolean
+  apellido     String
+  cuil         String
+  dni          Int
+  email        String  @unique
+  nombre       String
+  telefono     String
+  fechaIngreso String
+
+  asignaciones  AsignacionHoraria[]
+  mesasDeExamen MesasDeExamen[]
+  usuario       Usuario?
+}
+
+model Rol {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique
+
+  permisos Permiso[] @relation("RolPermiso")
+  usuarios Usuario[] @relation("UsuarioRol")
+}
+
+model Usuario {
+  id          Int     @id @default(autoincrement())
+  personalId  Int     @unique
+  activo      Boolean
+  contrasenia String
+
+  personal Personal @relation(fields: [personalId], references: [id], onDelete: Cascade)
+  roles    Rol[]    @relation("UsuarioRol")
+}

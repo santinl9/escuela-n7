@@ -1,0 +1,15 @@
+[
+  { "id": 1,  "descripcion": "1er Cuatrimestre", "tipo": "Valorativa", "cicloLectivoId": 3, "fechaIni": "2026-05-01", "fechaFin": "2026-07-10" },
+  { "id": 2,  "descripcion": "2do Cuatrimestre", "tipo": "Numerica",   "cicloLectivoId": 3, "fechaIni": "2026-07-27", "fechaFin": "2026-08-04" },
+  { "id": 3,  "descripcion": "1er Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 3, "fechaIni": "2026-03-02", "fechaFin": "2026-04-30" },
+  { "id": 4,  "descripcion": "2do Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 3, "fechaIni": "2026-07-11", "fechaFin": "2026-07-26" },
+  { "id": 13, "descripcion": "Intensificación de Agosto", "tipo": "Valorativa", "cicloLectivoId": 3, "fechaIni": "2026-08-10", "fechaFin": "2026-09-10" },
+  { "id": 5,  "descripcion": "2do Cuatrimestre", "tipo": "Numerica",   "cicloLectivoId": 2, "fechaIni": "2025-07-28", "fechaFin": "2025-12-05" },
+  { "id": 6,  "descripcion": "1er Cuatrimestre", "tipo": "Valorativa", "cicloLectivoId": 2, "fechaIni": "2025-05-01", "fechaFin": "2025-07-11" },
+  { "id": 7,  "descripcion": "1er Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 2, "fechaIni": "2025-03-01", "fechaFin": "2025-04-30" },
+  { "id": 8,  "descripcion": "2do Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 2, "fechaIni": "2025-07-12", "fechaFin": "2025-07-25" },
+  { "id": 9,  "descripcion": "2do Cuatrimestre", "tipo": "Numerica",   "cicloLectivoId": 1, "fechaIni": "2024-07-29", "fechaFin": "2024-12-06" },
+  { "id": 10, "descripcion": "1er Cuatrimestre", "tipo": "Valorativa", "cicloLectivoId": 1, "fechaIni": "2024-05-01", "fechaFin": "2024-07-12" },
+  { "id": 11, "descripcion": "1er Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 1, "fechaIni": "2024-03-01", "fechaFin": "2024-04-30" },
+  { "id": 12, "descripcion": "2do Bimestre",     "tipo": "Valorativa", "cicloLectivoId": 1, "fechaIni": "2024-07-13", "fechaFin": "2024-07-26" }
+]

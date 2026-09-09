@@ -1,0 +1,20 @@
+[
+  { "id": "1",  "personalId": "per1",  "roles": ["Administrador"],              "activo": true,  "contrasenia": "adiaz1"      },
+  { "id": "2",  "personalId": "per2",  "roles": ["Preceptor"],                  "activo": true,  "contrasenia": "cgomez"      },
+  { "id": "3",  "personalId": "per3",  "roles": ["Secretario", "Vicedirectivo"],"activo": false, "contrasenia": "mrodriguez"  },
+  { "id": "4",  "personalId": "per4",  "roles": ["Docente"],                    "activo": true,  "contrasenia": "lfernandez"  },
+  { "id": "5",  "personalId": "per5",  "roles": ["Preceptor"],                  "activo": true,  "contrasenia": "vsosa1"      },
+  { "id": "6",  "personalId": "per6",  "roles": ["Docente"],                    "activo": true,  "contrasenia": "ralvarez"    },
+  { "id": "7",  "personalId": "per7",  "roles": ["Docente"],                    "activo": true,  "contrasenia": "mtorres"     },
+  { "id": "8",  "personalId": "per8",  "roles": ["Docente"],                    "activo": true,  "contrasenia": "drios1"      },
+  { "id": "9",  "personalId": "per9",  "roles": ["EMATP"],                      "activo": true,  "contrasenia": "pnunez"      },
+  { "id": "10", "personalId": "per10", "roles": ["Prosecretario"],              "activo": true,  "contrasenia": "jmedina"     },
+  { "id": "11", "personalId": "per11", "roles": ["Docente", "Preceptor"],       "activo": true,  "contrasenia": "spaz12"      },
+  { "id": "12", "personalId": "per12", "roles": ["Docente"],                    "activo": false, "contrasenia": "fibanez"     },
+  { "id": "13", "personalId": "per13", "roles": ["Docente"],                    "activo": true,  "contrasenia": "lacosta"     },
+  { "id": "14", "personalId": "per14", "roles": ["Docente"],                    "activo": true,  "contrasenia": "gmolina"     },
+  { "id": "15", "personalId": "per15", "roles": ["Docente"],                    "activo": true,  "contrasenia": "cbenitez"    },
+  { "id": "16", "personalId": "per16", "roles": ["Docente"],                    "activo": true,  "contrasenia": "hcastro"     },
+  { "id": "17", "personalId": "per17", "roles": ["Preceptor"],                  "activo": true,  "contrasenia": "nvega1"      },
+  { "id": "18", "personalId": "per18", "roles": ["Docente"],                    "activo": true,  "contrasenia": "jherrera"    }
+]

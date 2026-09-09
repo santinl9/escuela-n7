@@ -1,0 +1,10 @@
+[
+  { "id": 1, "nivel": 1, "nombre": "A", "turno": "Maniana", "activo": true },
+  { "id": 2, "nivel": 1, "nombre": "B", "turno": "Tarde",   "activo": true },
+  { "id": 3, "nivel": 2, "nombre": "A", "turno": "Maniana", "activo": true },
+  { "id": 4, "nivel": 2, "nombre": "B", "turno": "Tarde",   "activo": true },
+  { "id": 5, "nivel": 3, "nombre": "A", "turno": "Maniana", "activo": true },
+  { "id": 6, "nivel": 4, "nombre": "A", "turno": "Tarde",   "activo": true, "orientacionId": 5 },
+  { "id": 7, "nivel": 5, "nombre": "A", "turno": "Noche",   "activo": true, "orientacionId": 5 },
+  { "id": 8, "nivel": 6, "nombre": "A", "turno": "Noche",   "activo": true, "orientacionId": 5 }
+]

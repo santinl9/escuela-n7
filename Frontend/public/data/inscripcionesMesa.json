@@ -1,0 +1,59 @@
+[
+  { "id": 1,  "mesaId": 1, "estudianteDni": 40030382, "fechaInscripcion": "2026-06-20", "nota": 8,    "asistio": true  },
+  { "id": 2,  "mesaId": 1, "estudianteDni": 42460771, "fechaInscripcion": "2026-06-21", "nota": null, "asistio": false },
+  { "id": 3,  "mesaId": 2, "estudianteDni": 42765346, "fechaInscripcion": "2026-06-22", "nota": 6,    "asistio": true  },
+
+  { "id": 4,  "mesaId": 1, "estudianteDni": 41799828, "fechaInscripcion": "2026-07-01", "nota": null, "asistio": null  },
+  { "id": 5,  "mesaId": 1, "estudianteDni": 42453361, "fechaInscripcion": "2026-07-02", "nota": null, "asistio": null  },
+  { "id": 6,  "mesaId": 1, "estudianteDni": 38290548, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 7,  "mesaId": 1, "estudianteDni": 44731678, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 8,  "mesaId": 1, "estudianteDni": 45179999, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+  { "id": 9,  "mesaId": 1, "estudianteDni": 44874616, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+  { "id": 10, "mesaId": 1, "estudianteDni": 43908206, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+  { "id": 11, "mesaId": 1, "estudianteDni": 46588018, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+  { "id": 12, "mesaId": 1, "estudianteDni": 41298861, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+
+  { "id": 13, "mesaId": 2, "estudianteDni": 44082976, "fechaInscripcion": "2026-07-01", "nota": null, "asistio": null  },
+  { "id": 14, "mesaId": 2, "estudianteDni": 43311164, "fechaInscripcion": "2026-07-02", "nota": null, "asistio": null  },
+  { "id": 15, "mesaId": 2, "estudianteDni": 44378419, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 16, "mesaId": 2, "estudianteDni": 43447010, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 17, "mesaId": 2, "estudianteDni": 45629954, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+
+  { "id": 18, "mesaId": 3, "estudianteDni": 45217843, "fechaInscripcion": "2026-07-01", "nota": null, "asistio": null  },
+  { "id": 19, "mesaId": 3, "estudianteDni": 41953972, "fechaInscripcion": "2026-07-02", "nota": null, "asistio": null  },
+  { "id": 20, "mesaId": 3, "estudianteDni": 44278117, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 21, "mesaId": 3, "estudianteDni": 40030382, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+  { "id": 22, "mesaId": 3, "estudianteDni": 42460771, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+  { "id": 23, "mesaId": 3, "estudianteDni": 42765346, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+
+  { "id": 24, "mesaId": 4, "estudianteDni": 41298861, "fechaInscripcion": "2026-07-01", "nota": null, "asistio": null  },
+  { "id": 25, "mesaId": 4, "estudianteDni": 45629954, "fechaInscripcion": "2026-07-02", "nota": null, "asistio": null  },
+  { "id": 26, "mesaId": 4, "estudianteDni": 43311164, "fechaInscripcion": "2026-07-03", "nota": null, "asistio": null  },
+  { "id": 27, "mesaId": 4, "estudianteDni": 44082976, "fechaInscripcion": "2026-07-04", "nota": null, "asistio": null  },
+
+  { "id": 28, "mesaId": 5, "estudianteDni": 40030382, "fechaInscripcion": "2025-10-20", "nota": 7,    "asistio": true  },
+  { "id": 29, "mesaId": 5, "estudianteDni": 42460771, "fechaInscripcion": "2025-10-21", "nota": 5,    "asistio": true  },
+  { "id": 30, "mesaId": 5, "estudianteDni": 42765346, "fechaInscripcion": "2025-10-22", "nota": 9,    "asistio": true  },
+  { "id": 31, "mesaId": 5, "estudianteDni": 41799828, "fechaInscripcion": "2025-10-23", "nota": 2,    "asistio": true  },
+  { "id": 32, "mesaId": 5, "estudianteDni": 42453361, "fechaInscripcion": "2025-10-24", "nota": null, "asistio": false },
+  { "id": 33, "mesaId": 5, "estudianteDni": 43908206, "fechaInscripcion": "2025-10-25", "nota": 4,    "asistio": true  },
+
+  { "id": 34, "mesaId": 6, "estudianteDni": 40030382, "fechaInscripcion": "2025-10-25", "nota": 6,    "asistio": true  },
+  { "id": 35, "mesaId": 6, "estudianteDni": 42765346, "fechaInscripcion": "2025-10-26", "nota": 8,    "asistio": true  },
+  { "id": 36, "mesaId": 6, "estudianteDni": 44731678, "fechaInscripcion": "2025-10-27", "nota": 3,    "asistio": true  },
+  { "id": 37, "mesaId": 6, "estudianteDni": 43447010, "fechaInscripcion": "2025-10-28", "nota": null, "asistio": false },
+
+  { "id": 38, "mesaId": 7, "estudianteDni": 42460771, "fechaInscripcion": "2025-07-01", "nota": 5,    "asistio": true  },
+  { "id": 39, "mesaId": 7, "estudianteDni": 40030382, "fechaInscripcion": "2025-07-02", "nota": 9,    "asistio": true  },
+  { "id": 40, "mesaId": 7, "estudianteDni": 45217843, "fechaInscripcion": "2025-07-03", "nota": 1,    "asistio": true  },
+
+  { "id": 41, "mesaId": 8, "estudianteDni": 44731678, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+  { "id": 42, "mesaId": 8, "estudianteDni": 44082976, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+  { "id": 43, "mesaId": 8, "estudianteDni": 38290548, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+  { "id": 44, "mesaId": 8, "estudianteDni": 43447010, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null  },
+
+  { "id": 45, "mesaId": 9,  "estudianteDni": 42765346, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null },
+  { "id": 46, "mesaId": 9,  "estudianteDni": 40030382, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null },
+  { "id": 47, "mesaId": 10, "estudianteDni": 41298861, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null },
+  { "id": 48, "mesaId": 10, "estudianteDni": 45217843, "fechaInscripcion": "2026-07-05", "nota": null, "asistio": null }
+]

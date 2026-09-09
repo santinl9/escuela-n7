@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nombre": "Aula 1",        "capacidad": 30, "activo": true },
+  { "id": 2, "nombre": "Aula 2",        "capacidad": 30, "activo": true },
+  { "id": 3, "nombre": "Aula 3",        "capacidad": 25, "activo": true },
+  { "id": 4, "nombre": "Laboratorio A", "capacidad": 25, "activo": true },
+  { "id": 5, "nombre": "Laboratorio B", "capacidad": 20, "activo": true },
+  { "id": 6, "nombre": "Biblioteca",    "capacidad": 40, "activo": true }
+]

@@ -1,0 +1,22 @@
+[
+  { "id": "p1",  "descripcion": "Ver Estudiantes"      },
+  { "id": "p2",  "descripcion": "Editar Estudiantes"   },
+  { "id": "p3",  "descripcion": "Eliminar Estudiantes" },
+  { "id": "p4",  "descripcion": "Ver Calificaciones"      },
+  { "id": "p5",  "descripcion": "Editar Calificaciones"   },
+  { "id": "p6",  "descripcion": "Eliminar Calificaciones" },
+  { "id": "p7",  "descripcion": "Ver Asistencias"      },
+  { "id": "p8",  "descripcion": "Editar Asistencias"   },
+  { "id": "p9",  "descripcion": "Eliminar Asistencias" },
+  { "id": "p10", "descripcion": "Ver Personal"      },
+  { "id": "p11", "descripcion": "Editar Personal"   },
+  { "id": "p12", "descripcion": "Eliminar Personal" },
+  { "id": "p13", "descripcion": "Ver Matriculas"      },
+  { "id": "p14", "descripcion": "Editar Matriculas"   },
+  { "id": "p15", "descripcion": "Eliminar Matriculas" },
+  { "id": "p16", "descripcion": "Ver Mesas de Examen"      },
+  { "id": "p17", "descripcion": "Editar Mesas de Examen"   },
+  { "id": "p18", "descripcion": "Eliminar Mesas de Examen" },
+  { "id": "p19", "descripcion": "Editar Ciclos Lectivos"   },
+  { "id": "p20", "descripcion": "Eliminar Ciclos Lectivos" }
+]

@@ -1,0 +1,9 @@
+[
+  { "id": 1, "inscripcionId": 20, "periodoCargaId": 9, "calificacion": 7.0, "inasistencias": 2  },
+  { "id": 2, "inscripcionId": 21, "periodoCargaId": 9, "calificacion": 3.0, "inasistencias": 8  },
+  { "id": 3, "inscripcionId": 24, "periodoCargaId": 9, "calificacion": 8.0, "inasistencias": 0  },
+  { "id": 4, "inscripcionId": 22, "periodoCargaId": 5, "calificacion": 0.0, "inasistencias": 22 },
+  { "id": 5, "inscripcionId": 23, "periodoCargaId": 5, "calificacion": 0.0, "inasistencias": 18 },
+  { "id": 6, "inscripcionId": 25, "periodoCargaId": 5, "calificacion": 6.0, "inasistencias": 2  },
+  { "id": 7, "inscripcionId": 26, "periodoCargaId": 5, "calificacion": 9.0, "inasistencias": 0  }
+]

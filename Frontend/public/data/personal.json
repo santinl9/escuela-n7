@@ -1,0 +1,200 @@
+[
+  {
+    "id": "per1",
+    "activo": true,
+    "apellido": "Díaz",
+    "cuil": "20-30123456-6",
+    "dni": 30123456,
+    "email": "adiaz@ees7.edu.ar",
+    "nombre": "Ana",
+    "telefono": 2213456701,
+    "fechaIngreso": "2015-03-01"
+  },
+  {
+    "id": "per2",
+    "activo": true,
+    "apellido": "Gómez",
+    "cuil": "27-32456789-9",
+    "dni": 32456789,
+    "email": "cgomez@ees7.edu.ar",
+    "nombre": "Carlos",
+    "telefono": 2213456702,
+    "fechaIngreso": "2017-08-15"
+  },
+  {
+    "id": "per3",
+    "activo": true,
+    "apellido": "Rodríguez",
+    "cuil": "20-28987654-4",
+    "dni": 28987654,
+    "email": "mrodriguez@ees7.edu.ar",
+    "nombre": "María",
+    "telefono": 2213456703,
+    "fechaIngreso": "2010-02-10"
+  },
+  {
+    "id": "per4",
+    "activo": true,
+    "apellido": "Fernández",
+    "cuil": "27-35678123-3",
+    "dni": 35678123,
+    "email": "lfernandez@ees7.edu.ar",
+    "nombre": "Luis",
+    "telefono": 2213456704,
+    "fechaIngreso": "2019-04-22"
+  },
+  {
+    "id": "per5",
+    "activo": true,
+    "apellido": "Sosa",
+    "cuil": "27-33112233-3",
+    "dni": 33112233,
+    "email": "vsosa@ees7.edu.ar",
+    "nombre": "Valeria",
+    "telefono": 2213456705,
+    "fechaIngreso": "2021-06-01"
+  },
+  {
+    "id": "per6",
+    "activo": true,
+    "apellido": "Álvarez",
+    "cuil": "20-31456789-5",
+    "dni": 31456789,
+    "email": "ralvarez@ees7.edu.ar",
+    "nombre": "Roberto",
+    "telefono": 2213456706,
+    "fechaIngreso": "2018-03-05"
+  },
+  {
+    "id": "per7",
+    "activo": true,
+    "apellido": "Torres",
+    "cuil": "27-34567891-2",
+    "dni": 34567891,
+    "email": "mtorres@ees7.edu.ar",
+    "nombre": "Marina",
+    "telefono": 2213456707,
+    "fechaIngreso": "2020-08-10"
+  },
+  {
+    "id": "per8",
+    "activo": true,
+    "apellido": "Ríos",
+    "cuil": "20-40123456-7",
+    "dni": 40123456,
+    "email": "drios@ees7.edu.ar",
+    "nombre": "Diego",
+    "telefono": 2213456708,
+    "fechaIngreso": "2023-02-20"
+  },
+  {
+    "id": "per9",
+    "activo": true,
+    "apellido": "Núñez",
+    "cuil": "27-29876543-8",
+    "dni": 29876543,
+    "email": "pnunez@ees7.edu.ar",
+    "nombre": "Patricia",
+    "telefono": 2213456709,
+    "fechaIngreso": "2016-05-12"
+  },
+  {
+    "id": "per10",
+    "activo": true,
+    "apellido": "Medina",
+    "cuil": "20-27654321-9",
+    "dni": 27654321,
+    "email": "jmedina@ees7.edu.ar",
+    "nombre": "Jorge",
+    "telefono": 2213456710,
+    "fechaIngreso": "2012-11-03"
+  },
+  {
+    "id": "per11",
+    "activo": true,
+    "apellido": "Paz",
+    "cuil": "27-33445566-1",
+    "dni": 33445566,
+    "email": "spaz@ees7.edu.ar",
+    "nombre": "Silvina",
+    "telefono": 2213456711,
+    "fechaIngreso": "2021-09-01"
+  },
+  {
+    "id": "per12",
+    "activo": false,
+    "apellido": "Ibáñez",
+    "cuil": "20-26789012-3",
+    "dni": 26789012,
+    "email": "fibanez@ees7.edu.ar",
+    "nombre": "Fernando",
+    "telefono": 2213456712,
+    "fechaIngreso": "2011-04-18"
+  },
+  {
+    "id": "per13",
+    "activo": true,
+    "apellido": "Acosta",
+    "cuil": "27-36789234-5",
+    "dni": 36789234,
+    "email": "lacosta@ees7.edu.ar",
+    "nombre": "Lucía",
+    "telefono": 2213456713,
+    "fechaIngreso": "2026-03-02"
+  },
+  {
+    "id": "per14",
+    "activo": true,
+    "apellido": "Molina",
+    "cuil": "20-25678345-1",
+    "dni": 25678345,
+    "email": "gmolina@ees7.edu.ar",
+    "nombre": "Gustavo",
+    "telefono": 2213456714,
+    "fechaIngreso": "2020-03-01"
+  },
+  {
+    "id": "per15",
+    "activo": true,
+    "apellido": "Benítez",
+    "cuil": "27-37890456-2",
+    "dni": 37890456,
+    "email": "cbenitez@ees7.edu.ar",
+    "nombre": "Camila",
+    "telefono": 2213456715,
+    "fechaIngreso": "2026-06-20"
+  },
+  {
+    "id": "per16",
+    "activo": true,
+    "apellido": "Castro",
+    "cuil": "20-24567891-0",
+    "dni": 24567891,
+    "email": "hcastro@ees7.edu.ar",
+    "nombre": "Hugo",
+    "telefono": 2213456716,
+    "fechaIngreso": "2019-03-01"
+  },
+  {
+    "id": "per17",
+    "activo": true,
+    "apellido": "Vega",
+    "cuil": "27-38901567-8",
+    "dni": 38901567,
+    "email": "nvega@ees7.edu.ar",
+    "nombre": "Natalia",
+    "telefono": 2213456717,
+    "fechaIngreso": "2024-02-01"
+  },
+  {
+    "id": "per18",
+    "activo": true,
+    "apellido": "Herrera",
+    "cuil": "20-23456912-7",
+    "dni": 23456912,
+    "email": "jherrera@ees7.edu.ar",
+    "nombre": "Julián",
+    "telefono": 2213456718,
+    "fechaIngreso": "2022-03-01"
+  }
+]

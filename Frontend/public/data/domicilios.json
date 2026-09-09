@@ -1,0 +1,308 @@
+[
+  {
+    "id": 1,
+    "estudianteDni": 43935217,
+    "calle": "Calle 25",
+    "numero": 1520
+  },
+  {
+    "id": 2,
+    "estudianteDni": 45860344,
+    "calle": "Calle 44",
+    "numero": 2042
+  },
+  {
+    "id": 3,
+    "estudianteDni": 46236188,
+    "calle": "Calle 9",
+    "numero": 2466
+  },
+  {
+    "id": 4,
+    "estudianteDni": 44731678,
+    "calle": "Calle 7",
+    "numero": 1487
+  },
+  {
+    "id": 5,
+    "estudianteDni": 45030580,
+    "calle": "Diagonal 80",
+    "numero": 1721
+  },
+  {
+    "id": 6,
+    "estudianteDni": 42983610,
+    "calle": "Calle 50",
+    "numero": 1874
+  },
+  {
+    "id": 7,
+    "estudianteDni": 43764831,
+    "calle": "Calle 16",
+    "numero": 2099
+  },
+  {
+    "id": 8,
+    "estudianteDni": 43581585,
+    "calle": "Calle 48",
+    "numero": 1291
+  },
+  {
+    "id": 9,
+    "estudianteDni": 45179999,
+    "calle": "Av. 32",
+    "numero": 2304
+  },
+  {
+    "id": 10,
+    "estudianteDni": 44158634,
+    "calle": "Av. 13",
+    "numero": 1516
+  },
+  {
+    "id": 11,
+    "estudianteDni": 39759209,
+    "calle": "Calle 9",
+    "numero": 1066
+  },
+  {
+    "id": 12,
+    "estudianteDni": 45381840,
+    "calle": "Calle 1",
+    "numero": 2718
+  },
+  {
+    "id": 13,
+    "estudianteDni": 38299384,
+    "calle": "Av. 60",
+    "numero": 169
+  },
+  {
+    "id": 14,
+    "estudianteDni": 44082976,
+    "calle": "Av. 7",
+    "numero": 638
+  },
+  {
+    "id": 15,
+    "estudianteDni": 46628417,
+    "calle": "Calle 38",
+    "numero": 2771
+  },
+  {
+    "id": 16,
+    "estudianteDni": 44381044,
+    "calle": "Av. 7",
+    "numero": 157
+  },
+  {
+    "id": 17,
+    "estudianteDni": 41799828,
+    "calle": "Calle 38",
+    "numero": 479
+  },
+  {
+    "id": 18,
+    "estudianteDni": 38290548,
+    "calle": "Calle 50",
+    "numero": 767
+  },
+  {
+    "id": 19,
+    "estudianteDni": 42453361,
+    "calle": "Calle 7",
+    "numero": 1202
+  },
+  {
+    "id": 20,
+    "estudianteDni": 45605170,
+    "calle": "Calle 16",
+    "numero": 926
+  },
+  {
+    "id": 21,
+    "estudianteDni": 38902962,
+    "calle": "Diagonal 73",
+    "numero": 2239
+  },
+  {
+    "id": 22,
+    "estudianteDni": 43143736,
+    "calle": "Calle 66",
+    "numero": 702
+  },
+  {
+    "id": 23,
+    "estudianteDni": 39129173,
+    "calle": "Av. 60",
+    "numero": 2243
+  },
+  {
+    "id": 24,
+    "estudianteDni": 39513592,
+    "calle": "Calle 16",
+    "numero": 2204
+  },
+  {
+    "id": 25,
+    "estudianteDni": 41953972,
+    "calle": "Av. 13",
+    "numero": 1508
+  },
+  {
+    "id": 26,
+    "estudianteDni": 45300006,
+    "calle": "Calle 50",
+    "numero": 2053
+  },
+  {
+    "id": 27,
+    "estudianteDni": 43447010,
+    "calle": "Diagonal 80",
+    "numero": 2897
+  },
+  {
+    "id": 28,
+    "estudianteDni": 45618692,
+    "calle": "Calle 7",
+    "numero": 2196
+  },
+  {
+    "id": 29,
+    "estudianteDni": 40994343,
+    "calle": "Calle 25",
+    "numero": 914
+  },
+  {
+    "id": 30,
+    "estudianteDni": 44108773,
+    "calle": "Av. 44",
+    "numero": 250
+  },
+  {
+    "id": 31,
+    "estudianteDni": 45395463,
+    "calle": "Av. 122",
+    "numero": 401
+  },
+  {
+    "id": 32,
+    "estudianteDni": 43908206,
+    "calle": "Calle 16",
+    "numero": 2116
+  },
+  {
+    "id": 33,
+    "estudianteDni": 42918437,
+    "calle": "Calle 19",
+    "numero": 2022
+  },
+  {
+    "id": 34,
+    "estudianteDni": 40030382,
+    "calle": "Calle 9",
+    "numero": 922
+  },
+  {
+    "id": 35,
+    "estudianteDni": 39385568,
+    "calle": "Calle 16",
+    "numero": 1348
+  },
+  {
+    "id": 36,
+    "estudianteDni": 42460771,
+    "calle": "Calle 32",
+    "numero": 389
+  },
+  {
+    "id": 37,
+    "estudianteDni": 46588018,
+    "calle": "Calle 50",
+    "numero": 446
+  },
+  {
+    "id": 38,
+    "estudianteDni": 41298861,
+    "calle": "Av. 7",
+    "numero": 2135
+  },
+  {
+    "id": 39,
+    "estudianteDni": 43311164,
+    "calle": "Calle 50",
+    "numero": 2172
+  },
+  {
+    "id": 40,
+    "estudianteDni": 44278117,
+    "calle": "Calle 44",
+    "numero": 2705
+  },
+  {
+    "id": 41,
+    "estudianteDni": 44378419,
+    "calle": "Calle 1",
+    "numero": 1588
+  },
+  {
+    "id": 42,
+    "estudianteDni": 45552644,
+    "calle": "Calle 32",
+    "numero": 946
+  },
+  {
+    "id": 43,
+    "estudianteDni": 42765346,
+    "calle": "Calle 25",
+    "numero": 1015
+  },
+  {
+    "id": 44,
+    "estudianteDni": 44874616,
+    "calle": "Calle 9",
+    "numero": 2881
+  },
+  {
+    "id": 45,
+    "estudianteDni": 45217843,
+    "calle": "Av. 32",
+    "numero": 673
+  },
+  {
+    "id": 46,
+    "estudianteDni": 45338138,
+    "calle": "Calle 25",
+    "numero": 2216
+  },
+  {
+    "id": 47,
+    "estudianteDni": 45629954,
+    "calle": "Av. 32",
+    "numero": 1259
+  },
+  {
+    "id": 48,
+    "estudianteDni": 40794348,
+    "calle": "Calle 25",
+    "numero": 2442
+  },
+  {
+    "id": 49,
+    "estudianteDni": 41467449,
+    "calle": "Calle 66",
+    "numero": 1496
+  },
+  {
+    "id": 50,
+    "estudianteDni": 42017165,
+    "calle": "Calle 50",
+    "numero": 510
+  },
+  {
+    "id": 51,
+    "estudianteDni": 44512345,
+    "calle": "Calle 19",
+    "numero": 734
+  }
+]

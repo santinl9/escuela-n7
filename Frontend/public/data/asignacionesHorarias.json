@@ -1,0 +1,23 @@
+[
+  { "id": 1,  "personalId": "per4",  "bloqueHorarioIds": [1],                "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2019-04-22", "fechaFin": "" },
+  { "id": 2,  "personalId": "per6",  "bloqueHorarioIds": [3],                "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2018-03-05", "fechaFin": "" },
+  { "id": 3,  "personalId": "per7",  "bloqueHorarioIds": [4],                "tipoCargo": "Profesor",      "situacionRevista": "Provisional",      "fechaIni": "2020-08-10", "fechaFin": "" },
+  { "id": 4,  "personalId": "per11", "bloqueHorarioIds": [5],                "tipoCargo": "Profesor",      "situacionRevista": "Titular Interino", "fechaIni": "2021-09-01", "fechaFin": "" },
+  { "id": 5,  "personalId": "per1",  "bloqueHorarioIds": [7, 17, 18, 19, 20], "tipoCargo": "Directivo",     "situacionRevista": "Titular",          "fechaIni": "2015-03-01", "fechaFin": "" },
+  { "id": 6,  "personalId": "per2",  "bloqueHorarioIds": [8],                "tipoCargo": "Preceptor",     "situacionRevista": "Titular",          "fechaIni": "2017-08-15", "fechaFin": "", "cursoIds": [1] },
+  { "id": 7,  "personalId": "per3",  "bloqueHorarioIds": [9],                "tipoCargo": "Secretario",    "situacionRevista": "Titular",          "fechaIni": "2010-02-10", "fechaFin": "" },
+  { "id": 8,  "personalId": "per3",  "bloqueHorarioIds": [10],               "tipoCargo": "Vicedirectivo", "situacionRevista": "Suplente",         "fechaIni": "2022-03-01", "fechaFin": "" },
+  { "id": 9,  "personalId": "per5",  "bloqueHorarioIds": [11],               "tipoCargo": "Preceptor",     "situacionRevista": "Provisional",      "fechaIni": "2021-06-01", "fechaFin": "", "cursoIds": [3] },
+  { "id": 10, "personalId": "per8",  "bloqueHorarioIds": [12],               "tipoCargo": "Profesor",      "situacionRevista": "Suplente",         "fechaIni": "2023-02-20", "fechaFin": "" },
+  { "id": 11, "personalId": "per9",  "bloqueHorarioIds": [13],               "tipoCargo": "EMATP",         "situacionRevista": "Titular",          "fechaIni": "2016-05-12", "fechaFin": "" },
+  { "id": 12, "personalId": "per10", "bloqueHorarioIds": [14],               "tipoCargo": "Prosecretario", "situacionRevista": "Titular",          "fechaIni": "2012-11-03", "fechaFin": "" },
+  { "id": 13, "personalId": "per11", "bloqueHorarioIds": [15],               "tipoCargo": "Preceptor",     "situacionRevista": "Suplente",         "fechaIni": "2023-03-01", "fechaFin": "", "cursoIds": [2] },
+  { "id": 14, "personalId": "per12", "bloqueHorarioIds": [16],               "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2011-04-18", "fechaFin": "" },
+  { "id": 15, "personalId": "per8",  "bloqueHorarioIds": [1],                "tipoCargo": "Profesor",      "situacionRevista": "Suplente",         "fechaIni": "2026-06-15", "fechaFin": "2026-07-15", "asignacionHorariaCubiertaId": 1 },
+  { "id": 16, "personalId": "per13", "bloqueHorarioIds": [21],               "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2026-03-02", "fechaFin": "" },
+  { "id": 17, "personalId": "per14", "bloqueHorarioIds": [23],               "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2020-03-01", "fechaFin": "" },
+  { "id": 18, "personalId": "per15", "bloqueHorarioIds": [23],               "tipoCargo": "Profesor",      "situacionRevista": "Suplente",         "fechaIni": "2026-06-20", "fechaFin": "2026-08-20", "asignacionHorariaCubiertaId": 17 },
+  { "id": 19, "personalId": "per16", "bloqueHorarioIds": [24],               "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2019-03-01", "fechaFin": "" },
+  { "id": 20, "personalId": "per17", "bloqueHorarioIds": [26, 27],           "tipoCargo": "Preceptor",     "situacionRevista": "Titular",          "fechaIni": "2024-02-01", "fechaFin": "", "cursoIds": [4, 6] },
+  { "id": 21, "personalId": "per18", "bloqueHorarioIds": [25],               "tipoCargo": "Profesor",      "situacionRevista": "Titular",          "fechaIni": "2022-03-01", "fechaFin": "" }
+]

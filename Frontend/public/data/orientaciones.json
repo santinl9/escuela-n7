@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nombre": "Ciencias Naturales" },
+  { "id": 2, "nombre": "Ciencias Sociales" },
+  { "id": 3, "nombre": "Economía" },
+  { "id": 4, "nombre": "Arte" },
+  { "id": 5, "nombre": "Informática" },
+  { "id": 6, "nombre": "Agropecuaria" }
+]
