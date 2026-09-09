@@ -52,10 +52,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "adiaz@ees7.edu.ar",
-  "contrasenia": "adiaz2026"
+  "email": "test_user_104@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenAdmin = {{loginAdmin.response.body.token}}
 
 ### [EXITO] Login — Directivo (200). Equipo de conducción: 54 permisos.
@@ -64,10 +65,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "squiroga@ees7.edu.ar",
-  "contrasenia": "squiroga2026"
+  "email": "test_user_122@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenDirectivo = {{loginDirectivo.response.body.token}}
 
 ### [EXITO] Login — Preceptor (200). 8 permisos, acotado a sus cursos.
@@ -76,10 +78,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "cgomez@ees7.edu.ar",
-  "contrasenia": "cgomez2026"
+  "email": "test_user_105@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenPreceptor = {{loginPreceptor.response.body.token}}
 
 ### [EXITO] Login — Docente / Profesor (200). 15 permisos, acotado a sus cursadas.
@@ -88,10 +91,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "lfernandez@ees7.edu.ar",
-  "contrasenia": "lfernandez2026"
+  "email": "test_user_107@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenDocente = {{loginDocente.response.body.token}}
 
 ### [EXITO] Login — EMATP (200). "Consulta total": los 25 permisos de Ver.
@@ -100,10 +104,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "pnunez@ees7.edu.ar",
-  "contrasenia": "pnunez2026"
+  "email": "test_user_112@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenEmatp = {{loginEmatp.response.body.token}}
 
 ### [EXITO] Login — usuario con DOS roles: Secretario + Vicedirectivo (200)
@@ -113,10 +118,11 @@ POST {{baseURL}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "mrodriguez@ees7.edu.ar",
-  "contrasenia": "mrodriguez2026"
+  "email": "test_user_106@example.com",
+  "contrasenia": "generic_pass_2026"
 }
 
+###
 @tokenMultiRol = {{loginMultiRol.response.body.token}}
 
 ### [EXITO] Identidad y permisos efectivos del token actual (200)
