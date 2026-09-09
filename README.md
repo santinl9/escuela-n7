@@ -95,8 +95,11 @@ escuela-n7/
 
 ---
 
-## 🛠️ Tecnologías Principales
+## 🛠️ Tecnologías y Herramientas
 
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, React Router v7, React Hook Form, Zod.
 - **Backend:** Node.js, Express, TypeScript, Prisma ORM, Zod.
 - **Base de Datos e Infraestructura:** PostgreSQL 16, Docker & Docker Compose.
+- **Herramientas de IA y Productividad:**
+  - **Claude Code:** Gestión de agentes a través de la terminal para acelerar el despliegue de funcionalidades, automatizar secuencias repetitivas en el desarrollo y planificar bloques de trabajo.
+  Las directivas de `CLAUDE.md`comprenden políticas de uso de MCP, skills y estándares de arquitectura y dominio.
