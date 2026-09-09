@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { Prisma } from "../generated/prisma/client";
 import { AppError } from "../errors/app.error";
+import { logger } from "../config/logger";
 
 /**
  * Middleware global de manejo de errores.
@@ -50,6 +51,6 @@ export function errorHandler(
   }
 
   // --- Fallback: cualquier otro error ---
-  console.error(err);
+  logger.error(err);
   return res.status(500).json({ mensaje: "Error interno del servidor" });
 }

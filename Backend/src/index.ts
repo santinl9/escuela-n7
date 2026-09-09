@@ -28,6 +28,7 @@ import authRoutes from "./routes/auth.routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import { authenticate } from "./middlewares/auth.middleware";
 import { env } from "./config/env";
+import { logger } from "./config/logger";
 
 const app = express();
 
@@ -78,5 +79,5 @@ app.use("/api/usuarios", usuarioRoutes);
 app.use(errorHandler);
 
 app.listen(env.PORT, () => {
-  console.log(`Servidor en http://localhost:${env.PORT}`);
+  logger.info(`Servidor en http://localhost:${env.PORT}`);
 });
